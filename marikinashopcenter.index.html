@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Marikina Shop Center - Full Function</title>
+    <style>
+        /* CSS PARA SA GANDA AT PINDOT */
+        :root {
+            --red: #ce1212;
+            --gold: #ffc107;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1517154421773-0529f29ea451?q=80&w=1000');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: var(--red);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Container para sa mga Pages */
+        .page {
+            display: none; /* Nakatago muna lahat */
+            padding: 20px;
+            max-width: 450px;
+            margin: 0 auto 100px auto;
+            position: relative;
+            z-index: 10; /* Sinisiguro na nasa ibabaw para mapindot */
+        }
+
+        .active {
+            display: block !important; /* Lalabas lang ang may active class */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+        }
+
+        /* BUTTONS */
+        .btn-main-reg {
+            background: linear-gradient(to right, #ff9800, #ffc107);
+            color: black;
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: block;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(255,193,7,0.4);
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+        }
+
+        .btn-blue { background: #007bff; color: white; }
+        .btn-dark { background: #222; color: white; }
+        .btn-green { background: #28a745; color: white; padding: 10px; width: auto; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box; /* Importante para hindi lumampas ang input */
+        }
+
+        /* Bottom Nav */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 2000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<header>MARIKINA SHOP CENTER</header>
+
+<div id="page-home" class="page active">
+    <button class="btn-main-reg" onclick="openPage('page-reg')">
+        Partner Ecommerce Registration<br>
+        <span style="font-size:0.7rem; font-weight:normal;">Fee: ₱780 | GCash: 09942314504</span>
+    </button>
+
+    <div class="card">
+        <h3 style="margin-top:0">Local Products</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="text-align:center">
+                <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=150" style="width:100%; border-radius:10px;">
+                <p>Shoes</p>
+            </div>
+            <div style="text-align:center">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150" style="width:100%; border-radius:10px;">
+                <p>Food</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-reg" class="page">
+    <div class="card">
+        <h2 style="color:var(--red); margin-top:0;">Partner Registration</h2>
+        <p style="background:#fff3cd; padding:10px; border-radius:8px; font-size:0.9rem;">
+            Magbayad muna ng <b>₱780</b> sa GCash:<br>
+            <b style="font-size:1.2rem; color:blue;">09942314504</b>
+        </p>
+        <input type="text" id="name" placeholder="Pangalan">
+        <input type="number" id="phone" placeholder="Contact Number">
+        <input type="email" id="email" placeholder="Email Address">
+        <label>Screenshot of Payment:</label>
+        <input type="file" id="proof">
+        
+        <button class="btn-action btn-blue" onclick="register()">ISUMITE / REGISTER</button>
+        <button class="btn-action btn-dark" onclick="openPage('page-home')">BACK</button>
+    </div>
+</div>
+
+<div id="page-login" class="page">
+    <div class="card" id="login-form">
+        <h2>Login Portal</h2>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn-action btn-blue" onclick="checkLogin()">ADMIN LOGIN</button>
+        <button class="btn-action btn-dark" onclick="alert('Rider login under maintenance')">RIDER LOGIN</button>
+    </div>
+
+    <div class="card" id="admin-dashboard" style="display:none;">
+        <h2>Boss B Dashboard</h2>
+        <p>List of Requests:</p>
+        <div id="request-list">No pending registration.</div>
+        <button class="btn-action btn-dark" onclick="logout()">LOGOUT</button>
+    </div>
+</div>
+
+<div class="nav-bar">
+    <div class="nav-item" onclick="openPage('page-home')">🏠<br>Home</div>
+    <div class="nav-item" onclick="openPage('page-reg')">🤝<br>Register</div>
+    <div class="nav-item" onclick="openPage('page-login')">👤<br>Admin</div>
+</div>
+
+<script>
+    /* JAVASCRIPT - ANG UTAL NG APP */
+    
+    // Database sa LocalStorage para hindi mabura
+    let database = JSON.parse(localStorage.getItem('marikina_db')) || [];
+
+    // Function para lumipat ng page (Siguradong gagana ang pindot)
+    function openPage(pageId) {
+        // Itago lahat ng pages
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+        });
+        // Ipakita ang napiling page
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // Function para sa Registration
+    function register() {
+        const n = document.getElementById('name').value;
+        const p = document.getElementById('phone').value;
+        const e = document.getElementById('email').value;
+        const s = document.getElementById('proof').value;
+
+        if(!n || !p || !e || !s) {
+            alert("Pakikumpleto ang lahat ng impormasyon kasama ang screenshot.");
+            return;
+        }
+
+        const data = { name: n, phone: p, email: e, status: 'PENDING', id: Date.now() };
+        database.push(data);
+        localStorage.setItem('marikina_db', JSON.stringify(database));
+
+        alert("Registration Submitted! Hintayin ang activation ni Boss B.");
+        
+        // Clear inputs
+        document.getElementById('name').value = "";
+        document.getElementById('phone').value = "";
+        document.getElementById('email').value = "";
+        
+        openPage('page-home');
+    }
+
+    // Admin Login Logic
+    function checkLogin() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+
+        if(u === 'B' && p === 'B') {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+            loadRequests();
+        } else {
+            alert("Maling Username o Password!");
+        }
+    }
+
+    // I-display ang mga nag-register sa Admin Panel
+    function loadRequests() {
+        const list = document.getElementById('request-list');
+        if(database.length === 0) {
+            list.innerHTML = "Walang pending registration.";
+            return;
+        }
+
+        list.innerHTML = "";
+        database.forEach((item, index) => {
+            list.innerHTML += `
+                <div style="border-bottom:1px solid #ccc; padding:10px 0;">
+                    <b>${item.name}</b> (${item.status})<br>
+                    Contact: ${item.phone}<br>
+                    ${item.status === 'PENDING' ? `<button class="btn-green" onclick="activate(${index})">ACTIVATE NOW</button>` : '✅ Active'}
+                </div>
+            `;
+        });
+    }
+
+    function activate(index) {
+        database[index].status = 'ACTIVATED';
+        localStorage.setItem('marikina_db', JSON.stringify(database));
+        alert("Account is now Active!");
+        loadRequests();
+    }
+
+    function logout() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('admin-dashboard').style.display = 'none';
+        document.getElementById('user').value = "";
+        document.getElementById('pass').value = "";
+    }
+</script>
+
+</body>
+</html>
